@@ -1,0 +1,33 @@
+table, input{
+  max-width:980px;
+  table-layout:fixed;
+  margin:auto;
+  width:100%;
+  height: 100%;
+  text-align: center;
+  background-color: #333;
+}
+
+#mark{
+  text-align: end;
+  vertical-align: bottom;
+  border:1px solid #000;
+  width: 100%;
+  height: 100%;
+  padding:35px 9px;
+}
+
+th, td, input, tr{
+  text-align: center;
+  vertical-align: middle;
+  padding:5px 10px;
+  border:1px solid #000;
+  background-color: #333;
+  color: white;
+}
+
+#buttonClass, table{
+  background-color: #333;
+  text-align:center;
+}
+

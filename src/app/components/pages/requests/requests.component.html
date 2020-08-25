@@ -1,0 +1,20 @@
+<div id="buttonClass">
+  <button id="approvalButton" (click)="sendApprovals(registrations)">Send Registration Approvals</button>
+</div>
+<table>
+  <tr>
+    <th *ngFor = "let column of headers">
+      {{column}}
+    </th>
+  </tr>
+
+
+  <tr *ngFor = "let registrationRequest of registrations">
+    <div id="mark">
+      <input id="check" (change)="onToggle(registrationRequest)" name="approvalMark" type="checkbox">
+    </div>
+    <td *ngFor="let column of registrationProperties">
+      {{registrationRequest[column]}}
+    </td>
+  </tr>
+</table>
