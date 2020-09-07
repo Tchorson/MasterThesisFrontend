@@ -1,0 +1,22 @@
+.flex-container {
+  text-align: center;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.container {
+  flex-direction: column;
+}
+
+.left {
+  float: left; height:60%; width: 40%;
+}
+
+.right {
+  float: right; height:60%; width: 60%;
+}
+
+input {
+  width: 55%;
+}

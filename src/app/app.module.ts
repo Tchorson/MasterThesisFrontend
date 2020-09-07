@@ -9,7 +9,6 @@ import { RequestsComponent } from './components/pages/requests/requests.componen
 import { HeaderComponent } from './components/layout/header/header.component';
 import { FooterComponent } from './components/layout/footer/footer.component';
 import { LoginComponent } from './components/pages/login/login.component';
-import { DashboardComponent } from './components/pages/dashboard/dashboard.component';
 import {UnknownComponent} from './components/pages/unknown/unknown.component';
 
 @NgModule({
@@ -19,7 +18,6 @@ import {UnknownComponent} from './components/pages/unknown/unknown.component';
     HeaderComponent,
     FooterComponent,
     LoginComponent,
-    DashboardComponent,
     UnknownComponent
   ],
   imports: [

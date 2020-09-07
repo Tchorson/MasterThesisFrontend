@@ -8,6 +8,8 @@ table, input{
 th, td, tr{
   text-align: center;
   padding:5px 15px;
+  border:1px solid #000;
+  background-color: #333;
   color: white;
 }
 

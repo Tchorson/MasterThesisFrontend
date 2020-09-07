@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="left">
+    <div class="flex-container">
+      <div>
+        <div>
+          <div class="login">
+            Username : <br>
+            <input type="text" name="username" [(ngModel)]="username">
+          </div>
+          <div class="login">
+            Password : <br>
+            <input type="password" name="password" [(ngModel)]="password">
+          </div>
+          <div class="login">
+            <button (click)=checkLogin() class="btn btn-success">Login</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="flex-container">
+      <div class="encryption">
+        Key : <br>
+        <input type="password" name="key" [(ngModel)]="key">
+      </div>
+      <div class="encryption">
+        IV : <br>
+        <input type="password" name="iv" [(ngModel)]="iv">
+      </div>
+    </div>
+  </div>
+</div>
