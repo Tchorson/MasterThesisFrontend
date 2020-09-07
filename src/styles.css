@@ -2,3 +2,7 @@
 body {
   background-color: #333333;
 }
+
+html {
+  overflow: auto;
+}

@@ -8,13 +8,19 @@ import { AppComponent } from './app.component';
 import { RequestsComponent } from './components/pages/requests/requests.component';
 import { HeaderComponent } from './components/layout/header/header.component';
 import { FooterComponent } from './components/layout/footer/footer.component';
+import { LoginComponent } from './components/pages/login/login.component';
+import { DashboardComponent } from './components/pages/dashboard/dashboard.component';
+import {UnknownComponent} from './components/pages/unknown/unknown.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RequestsComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    LoginComponent,
+    DashboardComponent,
+    UnknownComponent
   ],
   imports: [
     BrowserModule,

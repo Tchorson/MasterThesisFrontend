@@ -1,20 +1,23 @@
 <div id="buttonClass">
-  <button id="approvalButton" (click)="sendApprovals(registrations)">Send Registration Approvals</button>
+  <button id="approvalButton" (click)="sendApprovals(registrationsContener)">Send Registration Approvals</button>
 </div>
-<table>
-  <tr>
-    <th *ngFor = "let column of headers">
-      {{column}}
-    </th>
-  </tr>
+<div id="table">
+  <table>
+    <tr>
+      <th *ngFor = "let column of headers">
+        {{column}}
+      </th>
+    </tr>
 
 
-  <tr *ngFor = "let registrationRequest of registrations">
-    <div id="mark">
-      <input id="check" (change)="onToggle(registrationRequest)" name="approvalMark" type="checkbox">
-    </div>
-    <td *ngFor="let column of registrationProperties">
-      {{registrationRequest[column]}}
-    </td>
-  </tr>
-</table>
+    <tr *ngFor = "let registrationRequest of registrationsContener">
+      <div id="mark">
+        <input id="check" (change)="onToggle(registrationRequest)" name="approvalMark" type="checkbox">
+      </div>
+      <td *ngFor="let column of registrationProperties">
+        {{registrationRequest[column]}}
+      </td>
+    </tr>
+  </table>
+</div>
+

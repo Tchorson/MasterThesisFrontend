@@ -1,6 +1,6 @@
 <header class="header">
   <h1> Menu</h1>
   <nav>
-    <a id="link" routerLink="/">Requests</a> | <a id="link" routerLink="/unknown-status">Unknown users</a>
+    <pre> <a *ngIf="isLogged()" id="link" routerLink="/requests">Requests</a>  <a *ngIf="isLogged()" id="link" routerLink="/unknown-status">Unknown users</a>   <a *ngIf="isLogged()" id="link" routerLink="/" (click)="logout()">Logout</a> </pre>
   </nav>
 </header>

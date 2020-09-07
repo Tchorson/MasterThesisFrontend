@@ -21,6 +21,7 @@
     "@angular/router": "~10.1.0-next.4",
     "@types/cron": "^1.7.2",
     "cron": "^1.8.2",
+    "crypto-js": "^4.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

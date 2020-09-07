@@ -1,0 +1,13 @@
+table, input{
+  margin:auto;
+  height: 100%;
+  width: 300px;
+  text-align: center;
+}
+
+th, td, tr{
+  text-align: center;
+  padding:5px 15px;
+  color: white;
+}
+

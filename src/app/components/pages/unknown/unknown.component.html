@@ -1,1 +1,12 @@
-<p>unknown works!</p>
+<table>
+  <tr>
+    <th>
+      {{unknownHeader}}
+    </th>
+  </tr>
+  <tr *ngFor="let registrationRequest of unknownUsers">
+    <td>
+      {{registrationRequest}}
+    </td>
+  </tr>
+</table>
