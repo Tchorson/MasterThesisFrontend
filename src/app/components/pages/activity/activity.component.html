@@ -1,0 +1,6 @@
+<header class="header">
+<nav>
+  <pre> <a *ngIf="isLogged()" id="link" [routerLink]="['daily']">Daily Data</a>  <a *ngIf="isLogged()" id="link" [routerLink]="['history']">Historical Data</a> </pre>
+</nav>
+</header>
+<router-outlet></router-outlet>

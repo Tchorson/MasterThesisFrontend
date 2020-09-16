@@ -1,0 +1,40 @@
+<div class="example-header">
+  <mat-form-field>
+    <input matInput placeholder="Filter" (keyup)="applyFilter($event.target.value)" required>
+  </mat-form-field>
+</div>
+
+<div class="example-container mat-elevation-z8">
+
+  <mat-table [dataSource]="dailyContainer" matSort>
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="User">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> User </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.User}} </mat-cell>
+    </ng-container>
+
+    <!-- Progress Column -->
+    <ng-container matColumnDef="Device">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Device </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.Device}} </mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="Date">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Time </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.Date}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="dailyHeaders"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: dailyHeaders;">
+    </mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+
+
+<!-- Copyright 2018 Google Inc. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->

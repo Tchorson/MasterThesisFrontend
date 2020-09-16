@@ -11,7 +11,7 @@ import {CronJob} from 'cron';
 })
 export class UnknownComponent implements OnInit {
   @Input() unknown: Unknown;
-  @Output() idk: EventEmitter<string> = new EventEmitter();
+  @Output() unknownUserEmitter: EventEmitter<string> = new EventEmitter();
 
   unknownHeader = ['User'];
 
@@ -35,13 +35,10 @@ export class UnknownComponent implements OnInit {
     return this.http.get<string[]>(`${this.getUnknownsUrl}?token=${sessionStorage.getItem('token')}`)
       .subscribe(phoneNumbersArray => {
         const decryptedUsers = [];
-        console.log(phoneNumbersArray);
-        console.log('-------------');
         phoneNumbersArray.forEach(encryptedPhoneNumber => {
           decryptedUsers.push(this.cryptingService.hex2a(this.cryptingService.decrypt(encryptedPhoneNumber)));
         });
         this.unknownUsers = decryptedUsers;
-        console.log(this.unknownUsers);
       });
   }
 

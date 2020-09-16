@@ -1,0 +1,17 @@
+<div id="buttonClass">
+  <button id="alertButton" (click)="alertPolice()">Alert Police</button>
+</div>
+<table>
+  <tr>
+    <th *ngFor = "let column of fugitiveHeaders">
+      {{column}}
+    </th>
+  </tr>
+
+
+  <tr *ngFor="let fugitive of fugitivesContainer">
+    <td *ngFor="let column of fugitiveHeaders">
+      {{fugitive[column]}}
+    </td>
+  </tr>
+</table>

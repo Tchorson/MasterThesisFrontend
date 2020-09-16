@@ -13,12 +13,8 @@ export class HeaderComponent implements OnInit {
   constructor(private router: Router, private loginService: Login) { }
 
   ngOnInit(): void {
-    const job = new CronJob('0/15 * * * * *', () => {
+    const job = new CronJob('0/30 * * * * *', () => {
       this.loginService.session().then(response => {
-        console.log('response');
-
-        console.log(response);
-        console.log(response !== sessionStorage.getItem('token') || response === null);
         if (response !== sessionStorage.getItem('token') || response === null) {
           this.loginService.logout();
           this.router.navigate(['']);

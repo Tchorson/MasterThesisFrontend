@@ -5,6 +5,7 @@ import {RegistrationJSON} from '../../../json/RegistrationJSON';
 import {CronJob} from 'cron';
 import {EncryptionService} from '../../../services/encryption.service';
 import * as CryptoJS from 'crypto-js';
+import {HttpHeaders} from '@angular/common/http';
 
 @Component({
   selector: 'app-requests',
@@ -39,9 +40,8 @@ export class RequestsComponent implements OnInit {
           let key = CryptoJS.enc.Utf8.parse(sessionStorage.getItem('key'));
           let iv = CryptoJS.enc.Utf8.parse(sessionStorage.getItem('iv'));
           let data = this.encryptionService.hex2a(CryptoJS.AES.decrypt(registrationJson.phoneNumber, key, { iv: iv }).toString());
-          registrationJson.phoneNumber = data;
           return {
-            number: registrationJson.phoneNumber, latitude: registrationJson.lat, longitude: registrationJson.lng,
+            number: data, latitude: registrationJson.lat, longitude: registrationJson.lng,
             date: new Date(registrationJson.walkTimestamp * 1000), status: registrationJson.approved
           };
         });
