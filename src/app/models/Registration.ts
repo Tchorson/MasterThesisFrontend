@@ -9,7 +9,7 @@ export class Registration{
       this.number = phoneNumber;
       this.latitude = latitude;
       this.longitude = longitude;
-      this.date = new Date(date * 1000);
+      this.date = new Date(date  * 1000);
       this.status = approved;
   }
 }

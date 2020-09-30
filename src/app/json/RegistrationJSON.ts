@@ -9,7 +9,7 @@ export class RegistrationJSON {
     this.phoneNumber = phoneNumber;
     this.lat = latitude;
     this.lng = longitude;
-    this.walkTimestamp = date.getTime() / 1000;
+    this.walkTimestamp = date.getTime() / 1000 - 0;
     this.approved = approved;
   }
 }

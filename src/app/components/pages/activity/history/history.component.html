@@ -1,14 +1,104 @@
-<!--<table>-->
-  <!--<tr>-->
-    <!--<th *ngFor = "let column of historyHeaders">-->
-      <!--{{column}}-->
-    <!--</th>-->
-  <!--</tr>-->
+<div class="example-container mat-elevation-z8">
+  <mat-button-toggle-group name="alignment" [(ngModel)]="componentMode">
+    <mat-button-toggle value="History">History data</mat-button-toggle>
+    <mat-button-toggle value="UsersWhoMetUserRecently" (change)="refreshData()">Meeting user</mat-button-toggle>
+    <mat-button-toggle value="UsersFromParticularPlaceAndTime" (change)="refreshData()">Place&time</mat-button-toggle>
+  </mat-button-toggle-group>
+
+  <div class="history-container" *ngIf="componentMode==='History'">
+
+    <div class="example-header">
+      <mat-form-field>
+        <input matInput placeholder="Filter" (keyup)="applyFilter($event.target.value)" required>
+      </mat-form-field>
+    </div>
+
+    <mat-table [dataSource]="historyContainer" matSort>
+
+      <!-- ID Column -->
+      <ng-container matColumnDef="User">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> User</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.User}}</mat-cell>
+      </ng-container>
+
+      <!-- Progress Column -->
+      <ng-container matColumnDef="Device">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Device</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.Device}}</mat-cell>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="Date">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Time</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.Date}}</mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="historyHeaders"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: historyHeaders;">
+      </mat-row>
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </div>
+
+  <div class="meeting-users-container" *ngIf="componentMode==='UsersWhoMetUserRecently'">
+
+    <div class="phone-number"> Target phone number <br>
+      <input type="text" name="targetUser" [(ngModel)]="targetUser">
+    </div>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Enter a date range</mat-label>
+      <mat-date-range-input [rangePicker]="picker">
+        <input matStartDate placeholder="Start date" [(ngModel)]="startDateFormat">
+        <input matEndDate placeholder="End date" [(ngModel)]="stopDateFormat">
+      </mat-date-range-input>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+    <button (click)=findUsers() class="btn btn-success">Find related users with the target</button>
+  </div>
+  <table *ngIf="componentMode==='UsersWhoMetUserRecently'">
+    <tr>
+      <th>
+        {{usersHeader}}
+      </th>
+    </tr>
+    <tr *ngFor="let users of phoneUsersContainer">
+      <td>
+        {{users}}
+      </td>
+    </tr>
+  </table>
 
 
-  <!--<tr *ngFor="let fugitive of historyContainer">-->
-    <!--<td *ngFor="let column of historyHeaders">-->
-      <!--{{fugitive[column]}}-->
-    <!--</td>-->
-  <!--</tr>-->
-<!--</table>-->
+  <div class="meeting-users-container" *ngIf="componentMode==='UsersFromParticularPlaceAndTime'">
+
+    <div class="phone-number"> Target place<br>
+      <input type="text" name="targetUser" [(ngModel)]="targetUser">
+    </div>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Enter a date range</mat-label>
+      <mat-date-range-input [rangePicker]="picker">
+        <input matStartDate placeholder="Start date" [(ngModel)]="startDateFormat">
+        <input matEndDate placeholder="End date" [(ngModel)]="stopDateFormat">
+      </mat-date-range-input>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+    <button (click)=findUsers() class="btn btn-success">Get all users from particular place&time</button>
+  </div>
+  <table *ngIf="componentMode==='UsersFromParticularPlaceAndTime'">
+    <tr>
+      <th>
+        {{usersHeader}}
+      </th>
+    </tr>
+    <tr *ngFor="let users of phoneUsersContainer">
+      <td>
+        {{users}}
+      </td>
+    </tr>
+  </table>
+</div>

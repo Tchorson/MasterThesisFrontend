@@ -42,7 +42,7 @@ export class RequestsComponent implements OnInit {
           let data = this.encryptionService.hex2a(CryptoJS.AES.decrypt(registrationJson.phoneNumber, key, { iv: iv }).toString());
           return {
             number: data, latitude: registrationJson.lat, longitude: registrationJson.lng,
-            date: new Date(registrationJson.walkTimestamp * 1000), status: registrationJson.approved
+            date: new Date(registrationJson.walkTimestamp * 1000 ), status: registrationJson.approved
           };
         });
     });
