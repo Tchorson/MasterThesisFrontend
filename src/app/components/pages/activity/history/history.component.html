@@ -93,9 +93,17 @@
 
   <div class="meeting-users-container" *ngIf="componentMode==='CovidRiskEstimator'">
 
-    <div class="covid-user"> Infected user<br>
-      <input type="text" name="targetUser" [(ngModel)]="targetUser">
-    </div>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Choose sick user</mat-label>
+      <select matNativeControl [disabled]="disableSelect.value" [(ngModel)]="targetUser">
+        <option value="" selected></option>
+        <option value="521321545">521321545</option>
+        <option value="555321545">555321545</option>
+        <option value="666321545">666321545</option>
+      </select>
+    </mat-form-field>
+
 
     <mat-form-field appearance="fill">
       <mat-label>Enter a date range</mat-label>

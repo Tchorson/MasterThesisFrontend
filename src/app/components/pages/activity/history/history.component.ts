@@ -18,6 +18,7 @@ import {SuspiciousJSON} from '../../../../json/SuspiciousJSON';
   styleUrls: ['./history.component.css']
 })
 export class HistoryComponent implements OnInit {
+  disableSelect = new FormControl(false);
 
   historyHeaders = ['User', 'Device', 'Date'];
   historyContainer: MatTableDataSource<Data>;
