@@ -9,6 +9,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import * as CryptoJS from 'crypto-js';
 import {CronJob} from 'cron';
 import {FormGroup, FormControl} from '@angular/forms';
+import {Suspicious} from '../../../../models/Suspicious';
+import {SuspiciousJSON} from '../../../../json/SuspiciousJSON';
 
 @Component({
   selector: 'app-history',
@@ -22,13 +24,17 @@ export class HistoryComponent implements OnInit {
   historyUrl = 'http://localhost:8081/history-data';
   findUsersUrl = 'http://localhost:8081/find-users';
   placeAndTimeUrl = 'http://localhost:8081/users-data';
+  findInfectedPeopleUrl = 'http://localhost:8081/service/covid-detection';
+  alertURL = 'http://localhost:8081/service/alert';
   componentMode = 'History';
   targetUser = '';
   usersHeader = ['User'];
+  suspiciousHeaders = ['number','deltaPlace','deltaMeetings','hierarchy','risk'];
 
   startDateFormat = null;
   stopDateFormat = null;
   phoneUsersContainer: string[];
+  suspiciousPeopleContainer: Suspicious[];
 
   range = new FormGroup({
     start: new FormControl(),
@@ -63,7 +69,7 @@ export class HistoryComponent implements OnInit {
           this.stopDateFormat.setUTCHours(23, 59, 59);
         }
       }
-      if (this.componentMode === 'UsersFromParticularPlaceAndTime'){
+      if (this.componentMode === 'UsersFromParticularPlaceAndTime') {
         if (this.startDateFormat !== null) {
           this.startDateFormat.setUTCHours(0, 0, 0);
         }
@@ -103,9 +109,8 @@ export class HistoryComponent implements OnInit {
   findUsers() {
     if (this.targetUser === undefined || this.targetUser === null || this.targetUser.trim() === '' || this.startDateFormat === null || this.stopDateFormat === null) {
       alert('DATA OR USER NOT DECLARED');
-    }
-    else {
-      if (this.componentMode === 'UsersWhoMetUserRecently'){
+    } else {
+      if (this.componentMode === 'UsersWhoMetUserRecently') {
         this.http.post<string[]>(`${this.findUsersUrl}?token=${sessionStorage.getItem('token')}`,
           {
             userData: this.cryptingService.encrypt(this.targetUser),
@@ -119,26 +124,59 @@ export class HistoryComponent implements OnInit {
               return this.cryptingService.hex2a(CryptoJS.AES.decrypt(phone, key, {iv}).toString());
             });
           });
-      }
-      else{
-        this.http.post<string[]>(`${this.placeAndTimeUrl}?token=${sessionStorage.getItem('token')}`,
-          {
-            userData: this.cryptingService.encrypt(this.targetUser),
-            startDate: (this.startDateFormat.getTime() / 1000),
-            stopDate: (this.stopDateFormat.getTime() / 1000)
-          }, this.httpOptions)
-          .subscribe(phoneUsersArray => {
-            this.phoneUsersContainer = phoneUsersArray.map(phone => {
-              const key = CryptoJS.enc.Utf8.parse(sessionStorage.getItem('key'));
-              const iv = CryptoJS.enc.Utf8.parse(sessionStorage.getItem('iv'));
-              return this.cryptingService.hex2a(CryptoJS.AES.decrypt(phone, key, {iv}).toString());
+      } else {
+        if (this.componentMode === 'CovidRiskEstimator') {
+          this.http.post<SuspiciousJSON[]>(`${this.findInfectedPeopleUrl}?token=${sessionStorage.getItem('token')}`,
+            {
+              userData: this.cryptingService.encrypt(this.targetUser),
+              startDate: (this.startDateFormat.getTime() / 1000),
+              stopDate: (this.stopDateFormat.getTime() / 1000)
+            }, this.httpOptions)
+            .subscribe(suspiciousPeopleArray => {
+              this.suspiciousPeopleContainer = suspiciousPeopleArray.map(suspicious => {
+                const key = CryptoJS.enc.Utf8.parse(sessionStorage.getItem('key'));
+                const iv = CryptoJS.enc.Utf8.parse(sessionStorage.getItem('iv'));
+                return {
+                  number : this.cryptingService.hex2a(CryptoJS.AES.decrypt(suspicious.user, key, {iv}).toString()),
+                  deltaPlace : suspicious.deltaAtPlace,
+                  deltaMeetings : suspicious.deltaBetweenMeetings,
+                  hierarchy : suspicious.hierarchyLevel,
+                  risk : suspicious.riskLevel
+                }
+              });
             });
-          });
+        } else {
+          this.http.post<string[]>(`${this.placeAndTimeUrl}?token=${sessionStorage.getItem('token')}`,
+            {
+              userData: this.cryptingService.encrypt(this.targetUser),
+              startDate: (this.startDateFormat.getTime() / 1000),
+              stopDate: (this.stopDateFormat.getTime() / 1000)
+            }, this.httpOptions)
+            .subscribe(phoneUsersArray => {
+              this.phoneUsersContainer = phoneUsersArray.map(phone => {
+                const key = CryptoJS.enc.Utf8.parse(sessionStorage.getItem('key'));
+                const iv = CryptoJS.enc.Utf8.parse(sessionStorage.getItem('iv'));
+                return this.cryptingService.hex2a(CryptoJS.AES.decrypt(phone, key, {iv}).toString());
+              });
+            });
+        }
       }
     }
   }
 
-  refreshData(){
+  alertAllUsers(){
+    this.http.post<string[]>(`${this.alertURL}?token=${sessionStorage.getItem('token')}`,
+      {
+        userData: this.cryptingService.encrypt(this.targetUser),
+        startDate: (this.startDateFormat.getTime() / 1000),
+        stopDate: (this.stopDateFormat.getTime() / 1000)
+      }, this.httpOptions)
+      .subscribe(log => {
+        this.suspiciousPeopleContainer.length = 0;
+      });
+  }
+
+  refreshData() {
     this.phoneUsersContainer = [];
     this.targetUser = '';
     this.startDateFormat = '';

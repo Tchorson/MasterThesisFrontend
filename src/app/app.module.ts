@@ -25,6 +25,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { CovidRiskEstimatorComponent } from './components/pages/covid-risk-estimator/covid-risk-estimator.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     FugitivesComponent,
     ActivityComponent,
     DailyComponent,
-    HistoryComponent
+    HistoryComponent,
+    CovidRiskEstimatorComponent
   ],
   imports: [
     BrowserModule,

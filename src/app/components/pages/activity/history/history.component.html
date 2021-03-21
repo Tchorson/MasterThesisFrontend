@@ -3,13 +3,14 @@
     <mat-button-toggle value="History">History data</mat-button-toggle>
     <mat-button-toggle value="UsersWhoMetUserRecently" (change)="refreshData()">Meeting user</mat-button-toggle>
     <mat-button-toggle value="UsersFromParticularPlaceAndTime" (change)="refreshData()">Place&time</mat-button-toggle>
+    <mat-button-toggle value="CovidRiskEstimator" (change)="refreshData()">Risk estimator</mat-button-toggle>
   </mat-button-toggle-group>
 
   <div class="history-container" *ngIf="componentMode==='History'">
 
     <div class="example-header">
       <mat-form-field>
-        <input matInput placeholder="Filter" (keyup)="applyFilter($event.target.value)" required>
+<!--        <input matInput placeholder="Filter" (keyup)="applyFilter($event.target.value)" required>-->
       </mat-form-field>
     </div>
 
@@ -89,6 +90,41 @@
     </mat-form-field>
     <button (click)=findUsers() class="btn btn-success">Get all users from particular place&time</button>
   </div>
+
+  <div class="meeting-users-container" *ngIf="componentMode==='CovidRiskEstimator'">
+
+    <div class="covid-user"> Infected user<br>
+      <input type="text" name="targetUser" [(ngModel)]="targetUser">
+    </div>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Enter a date range</mat-label>
+      <mat-date-range-input [rangePicker]="picker">
+        <input matStartDate placeholder="Start date" [(ngModel)]="startDateFormat">
+        <input matEndDate placeholder="End date" [(ngModel)]="stopDateFormat">
+      </mat-date-range-input>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+    <div>
+      <button (click)=findUsers() class="btn btn-success">Fetch met users</button>
+      <button (click)=alertAllUsers() class="btn btn-success">Alert users</button>
+    </div>
+
+    <table *ngIf="componentMode==='CovidRiskEstimator'">
+      <tr>
+        <th *ngFor = "let column of suspiciousHeaders">
+          {{column}}
+        </th>
+      </tr>
+      <tr *ngFor = "let user of suspiciousPeopleContainer">
+        <td *ngFor="let column of suspiciousHeaders">
+          {{user[column]}}
+        </td>
+      </tr>
+    </table>
+  </div>
+
   <table *ngIf="componentMode==='UsersFromParticularPlaceAndTime'">
     <tr>
       <th>

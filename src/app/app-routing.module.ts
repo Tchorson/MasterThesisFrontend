@@ -7,6 +7,7 @@ import {AuthGaurdService} from './services/auth-gaurd.service';
 import {FugitivesComponent} from './components/pages/fugitives/fugitives.component';
 import {ActivityComponent} from './components/pages/activity/activity.component';
 import {DailyComponent} from './components/pages/activity/daily/daily.component';
+import {CovidRiskEstimatorComponent} from './components/pages/covid-risk-estimator/covid-risk-estimator.component';
 import {HistoryComponent} from './components/pages/activity/history/history.component';
 
 const routes: Routes = [
@@ -19,7 +20,8 @@ const routes: Routes = [
     children: [
       {path: 'daily', component: DailyComponent},
       {path: 'history', component: HistoryComponent},
-      {path: '', redirectTo: 'daily', pathMatch: 'full'}
+      {path: '', redirectTo: 'daily', pathMatch: 'full'},
+      {path: 'risk-estimator', component: CovidRiskEstimatorComponent}
     ]
   }
 ];
