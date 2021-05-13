@@ -10,7 +10,7 @@ import * as CryptoJS from 'crypto-js';
 export class Login {
 
 
-  loginUrl = 'http://localhost:8081/login';
+  loginUrl = 'http://localhost:8081/adminlogin';
   logoutUrl = 'http://localhost:8081/logout';
   sessionUrl = 'http://localhost:8081/session';
 
